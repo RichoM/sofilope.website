@@ -4,15 +4,46 @@
 (defn add-class [html & classes]
   (update html 0 (fn [tag] (keyword (subs (str/join "." (cons tag classes)) 1)))))
 
+
+(def lightbox-registry (atom []))
+
+(defn lightbox-modal [id img]
+  [:div.modal.fade
+   {:id id :tabindex "-1" :aria-hidden "true"}
+   [:div.modal-dialog.modal-dialog-centered.modal-xl
+    [:div.modal-content.bg-transparent.border-0
+     [:div.modal-body.p-0.text-center.position-relative
+      [:button.btn-close.btn-close-white.position-absolute.top-0.end-0.m-3
+       {:type "button" :data-bs-dismiss "modal" :aria-label "Close"}]
+      [:img.img-fluid
+       {:src img :alt "Expanded View"
+        :loading "lazy"}]]]]])
+
+(defn lightbox [& {:keys [thumbnail img]}]
+  (let [{:keys [id]}
+        (-> lightbox-registry
+            (swap! (fn [lightboxes]
+                     (let [id (str "lightbox" (count lightboxes))
+                           modal (lightbox-modal id img)]
+                       (conj lightboxes
+                             {:id id
+                              :modal modal}))))
+            (peek))]
+    [:a {:href "#" :data-bs-toggle "modal" :data-bs-target (str "#" id)}
+     thumbnail]))
+
+
 (defn carousel-slide
-  [& {:keys [title subtitle img alt-text] :as metadata}]
+  [& {:keys [title subtitle img fullscreen-img alt-text] :as metadata}]
   (with-meta
     [:div.carousel-item
-     [:img.d-block.w-100 {:src img :alt alt-text
-                          :style "width: 100%; height: auto; min-height: 500px; object-fit: cover;"}]
-     [:div.carousel-caption.text-light.p-4.text-end
-      {:style "filter:drop-shadow(5px 5px 10px #000000);"}
-      [:h1.display-4.fw-bold (ssgr/markdown title)]
+     (lightbox
+      :img (or fullscreen-img img)
+      :thumbnail [:img.d-block.w-100 {:src img :alt alt-text
+                                      :loading "lazy"}])
+     [:div.carousel-caption.text-light.p-4.text-center
+      {:style "filter:drop-shadow(1px 1px 2px #000000);"}
+      [:p.display-4.fw-bold (ssgr/markdown title)]
       [:p.fs-3 (ssgr/markdown subtitle)]]]
     metadata))
 
@@ -65,7 +96,8 @@
                 :data-bs-slide-to (str idx)
                 :aria-current (= idx 0)
                 :aria-label (str "Slide " (inc idx))}
-               [:img.img-thumbnail {:src img :alt alt-text}]])))]]))
+               [:img.img-thumbnail {:src img :alt alt-text
+                                    :loading "lazy"}]])))]]))
 
 (defn featurette
   [& {:keys [title subtitle content img]}]
