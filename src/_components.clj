@@ -19,32 +19,34 @@
        {:src img :alt "Expanded View"
         :loading "lazy"}]]]]])
 
-(defn lightbox [& {:keys [thumbnail img]}]
-  (let [{:keys [id]}
-        (-> lightbox-registry
-            (swap! (fn [lightboxes]
-                     (let [id (str "lightbox" (count lightboxes))
-                           modal (lightbox-modal id img)]
-                       (conj lightboxes
-                             {:id id
-                              :modal modal}))))
-            (peek))]
-    [:a {:href "#" :data-bs-toggle "modal" :data-bs-target (str "#" id)}
-     thumbnail]))
+(defn lightbox [children & {:keys [img]}]
+  (if (nil? img)
+    children
+    (let [{:keys [id]}
+          (-> lightbox-registry
+              (swap! (fn [lightboxes]
+                       (let [id (str "lightbox" (count lightboxes))
+                             modal (lightbox-modal id img)]
+                         (conj lightboxes
+                               {:id id
+                                :modal modal}))))
+              (peek))]
+      [:a {:href "#" :data-bs-toggle "modal" :data-bs-target (str "#" id)}
+       children])))
 
 
 (defn carousel-slide
   [& {:keys [title subtitle img fullscreen-img alt-text] :as metadata}]
   (with-meta
     [:div.carousel-item
-     (lightbox
-      :img (or fullscreen-img img)
-      :thumbnail [:img.d-block.w-100 {:src img :alt alt-text
-                                      :loading "lazy"}])
-     [:div.carousel-caption.text-light.p-4.text-center
-      {:style "filter:drop-shadow(1px 1px 2px #000000);"}
-      [:p.display-4.fw-bold (ssgr/markdown title)]
-      [:p.fs-3 (ssgr/markdown subtitle)]]]
+     (lightbox (list [:img.d-block.w-100 {:src img :alt alt-text
+                                          :loading "lazy"}]
+                     [:div.carousel-caption.text-light.p-4.text-center
+                      {:style "filter:drop-shadow(1px 1px 2px #000000);"}
+                      [:p.display-4.fw-bold (ssgr/markdown title)]
+                      [:p.fs-3 (ssgr/markdown subtitle)]])
+               :img (or fullscreen-img img))]
+
     metadata))
 
 (def carousel-counter (atom 0))

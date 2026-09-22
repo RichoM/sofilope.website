@@ -16,8 +16,7 @@
             (map (fn [idx]
                    (carousel-slide
                     :img (str "https://placehold.co/900x450/" (nth-color idx) "/3c3430")
-                    :fullscreen-img (str "https://placehold.co/2900x2450/" (nth-color idx) "/3c3430")
-                    :alt-text (str "Ejemplo " (inc idx)))))))
+                    :fullscreen-img (str "https://placehold.co/2900x2450/" (nth-color idx) "/3c3430"))))))
 
 ---
 
