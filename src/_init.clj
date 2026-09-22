@@ -2,6 +2,8 @@
 (require '[ssgr.token :as t])
 (require '[clojure.string :as str])
 
+(declare lightbox-registry) ; HACK(Richo): We should support namespaces
+
 (def title "Sofilope")
 
 (def menu
