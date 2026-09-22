@@ -2,3 +2,5 @@
 .clj-kondo/
 .lsp/
 .portal/
+
+out/
