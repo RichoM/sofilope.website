@@ -1,0 +1,43 @@
+(require 'ssgr)
+(require '[clojure.string :as str])
+(declare carousel carousel-slide featurette columns)
+
+(def colors ["FFAC81"
+             "FF928B"
+             "FEC3A6"
+             "EFE9AE"
+             "CDEAC0"])
+
+(defn nth-color [idx]
+  (nth colors (mod idx (count colors))))
+
+(apply carousel
+       (->> (range 50)
+            (map (fn [idx]
+                   (carousel-slide
+                    :img (str "https://placehold.co/900x450/" (nth-color idx) "/3c3430")
+                    :alt-text (str "Ejemplo " (inc idx)))))))
+
+---
+
+# Prueba de varios carousels
+
+Este carousel tiene menos fotitos:
+
+(apply carousel
+       (->> (range 5)
+            (map (fn [idx]
+                   (carousel-slide
+                    :img (str "https://placehold.co/900x450/" (nth-color idx) "/3c3430")
+                    :alt-text (str "Ejemplo " (inc idx)))))))
+
+---
+
+Este carousel tiene algunas más pero no tantas
+
+(apply carousel
+       (->> (range 10)
+            (map (fn [idx]
+                   (carousel-slide
+                    :img (str "https://placehold.co/900x450/" (nth-color idx) "/3c3430")
+                    :alt-text (str "Ejemplo " (inc idx)))))))
