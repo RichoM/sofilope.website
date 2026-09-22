@@ -38,7 +38,7 @@
                    value))])))
 
 (defn navbar [file-name]
-  [:nav.navbar.navbar-expand-lg.sticky-top.justify-content-center
+  [:nav.navbar.navbar-expand-lg.sticky-top.justify-content-center.bg-body-tertiary
    [:div.container
     [:a.navbar-brand {:href "index.html"}
      ; TODO(Richo): Acá podríamos agregar el iconito de sofilope
