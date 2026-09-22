@@ -56,23 +56,24 @@
            menu)]]]])
 
 (def footer
-  [:div.container.pt-4.my-5
-   [:footer.d-flex.flex-wrap.justify-content-between.align-items-center
-    [:div.col-md-4.mb-3.mb-md-0.text-body-secondary
-     "Copyright ©2026 Sofilope, All Rights Reserved"]
-    [:ul.nav.col-md-4.justify-content-end.list-unstyled.d-flex
-     [:li.ms-1
-      [:a.text-body-secondary {:target "_blank" :href "https://www.furaffinity.net/user/sofiamer/"}
-       [:i.fa-solid.fa-otter.fa-2x.fa-fw]]]
-     [:li.ms-1
-      [:a.text-body-secondary {:target "_blank" :href "https://x.com/Sofimercuri"}
-       [:i.fa-brands.fa-twitter.fa-2x.fa-fw]]]
-     [:li.ms-1
-      [:a.text-body-secondary {:target "_blank" :href "https://www.instagram.com/sofiamercuri.art/"}
-       [:i.fa-brands.fa-instagram.fa-2x.fa-fw]]]
-     [:li.ms-1
-      [:a.text-body-secondary {:target "_blank" :href "https://sofiamercuri.artstation.com/"}
-       [:i.fa-brands.fa-artstation.fa-2x.fa-fw]]]]]])
+  [:div.container-fluid.bg-body-tertiary
+   [:div.container
+    [:footer.d-flex.flex-wrap.justify-content-between.align-items-center.pt-3.pb-5.border-top
+     [:div.col-md-4.mb-3.mb-md-0.text-body-secondary
+      "©2026 Sofilope"]
+     [:ul.nav.col-md-4.justify-content-end.list-unstyled.d-flex
+      [:li.ms-1
+       [:a.text-body-secondary {:target "_blank" :href "https://www.furaffinity.net/user/sofiamer/"}
+        [:i.fa-solid.fa-otter.fa-2x.fa-fw]]]
+      [:li.ms-1
+       [:a.text-body-secondary {:target "_blank" :href "https://x.com/Sofimercuri"}
+        [:i.fa-brands.fa-twitter.fa-2x.fa-fw]]]
+      [:li.ms-1
+       [:a.text-body-secondary {:target "_blank" :href "https://www.instagram.com/sofiamercuri.art/"}
+        [:i.fa-brands.fa-instagram.fa-2x.fa-fw]]]
+      [:li.ms-1
+       [:a.text-body-secondary {:target "_blank" :href "https://sofiamercuri.artstation.com/"}
+        [:i.fa-brands.fa-artstation.fa-2x.fa-fw]]]]]]])
 
 (defn apply-layout [document file-name]
   [:html {:lang "en"}
