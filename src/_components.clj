@@ -1,4 +1,5 @@
 (require '[clojure.string :as str])
+(require '[clojure.walk :refer [prewalk]])
 (require 'ssgr)
 
 (defn add-class [html & classes]
@@ -31,8 +32,21 @@
                                {:id id
                                 :modal modal}))))
               (peek))]
-      [:a {:href "#" :data-bs-toggle "modal" :data-bs-target (str "#" id)}
-       children])))
+      (with-meta
+        [:a {:href "#" :data-bs-toggle "modal" :data-bs-target (str "#" id)}
+         children]
+        {:lightbox id}))))
+
+(defn get-lightbox-modals [doc]
+  (let [ids (atom #{})]
+    (prewalk
+     (fn [el]
+       (swap! ids conj (get (meta el) :lightbox))
+       el)
+     doc)
+    (->> @lightbox-registry
+         (filter (comp @ids :id))
+         (map :modal))))
 
 
 (defn carousel-slide

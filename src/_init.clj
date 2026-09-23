@@ -2,7 +2,7 @@
 (require '[ssgr.token :as t])
 (require '[clojure.string :as str])
 
-(declare lightbox-registry) ; HACK(Richo): We should support namespaces
+(declare get-lightbox-modals) ; HACK(Richo): We should support namespaces
 
 (def title "Sofilope")
 
@@ -96,7 +96,7 @@
       "index.html" document
       [:div.container.fs-5 document])
     footer
-    [:div (map :modal @lightbox-registry)]
+    [:div (get-lightbox-modals document)]
     [:script {:src "https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
               :integrity "sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
               :crossorigin "anonymous"}]
@@ -131,10 +131,8 @@
      rendered]
 
     :ssgr.doc/document
-    (let [file-name (md->html (-> element meta :file))
-          doc (apply-layout rendered file-name)]
-      (reset! lightbox-registry [])
-      doc)
+    (let [file-name (md->html (-> element meta :file))]
+      (apply-layout rendered file-name))
     rendered))
 
 (register-callback! render)
