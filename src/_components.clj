@@ -49,6 +49,13 @@
          (map :modal))))
 
 
+(defn gallery [items]
+  [:div.gallery items])
+
+(defn gallery-item [children]
+  [:div.gallery-item children])
+
+
 (defn carousel-slide
   [& {:keys [title subtitle img fullscreen-img alt-text] :as metadata}]
   (with-meta

@@ -1,6 +1,7 @@
 (require 'ssgr)
 (require '[clojure.string :as str])
-(declare carousel carousel-slide lightbox)
+(declare carousel carousel-slide lightbox
+         gallery gallery-item)
 
 (def colors ["FFAC81"
              "FF928B"
@@ -20,20 +21,20 @@
                      :fullscreen-img (str "https://placehold.co/2900x2450/" (nth-color idx) "/3c3430"))))))]
 
 [:div.px-1.w-100.bg-light
- [:div.gallery
+ (gallery
   (->> (range 20)
        (map (fn [idx]
-              [:div.gallery-item
-               (let [w (+ 200 (rand-int 500))
-                     h (+ w -150 (rand-int 200))
-                     img (str "https://placehold.co/"
-                              w "x"
-                              h "/"
-                              (nth-color idx) "/3c3430")
-                     fullscreen (str "https://placehold.co/"
-                                     (+ 1000 w) "x"
-                                     (+ 1000 h) "/"
-                                     (nth-color idx) "/3c3430")]
+              (let [w (+ 200 (rand-int 500))
+                    h (+ w -150 (rand-int 200))
+                    img (str "https://placehold.co/"
+                             w "x"
+                             h "/"
+                             (nth-color idx) "/3c3430")
+                    fullscreen (str "https://placehold.co/"
+                                    (+ 1000 w) "x"
+                                    (+ 1000 h) "/"
+                                    (nth-color idx) "/3c3430")]
+                (gallery-item
                  (lightbox [:img {:src img :loading "lazy"}]
-                           :img fullscreen))]))
-       (doall))]]
+                           :img fullscreen)))))
+       (doall)))]
