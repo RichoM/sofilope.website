@@ -42,3 +42,22 @@
 .thumbnail-btn:hover {
   opacity: 0.8;
 }
+
+.gallery {
+  /* Automatically switches between 1 to 4 columns depending on screen size */
+  column-width: 25vw; 
+  column-gap: 5px;
+  padding: 5px;
+}
+
+.gallery-item {
+  /* Forces the item to stay contained inside its column */
+  break-inside: avoid; 
+  margin-bottom: 5px
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto; /* Lets the height adapt naturally to the aspect ratio */
+  display: block;
+}

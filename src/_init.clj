@@ -92,7 +92,9 @@
     [:link {:rel "stylesheet" :href "style.css"}]]
    [:body
     (navbar file-name)
-    [:div.container.fs-5 document]
+    (case file-name
+      "index.html" document
+      [:div.container.fs-5 document])
     footer
     [:div (map :modal @lightbox-registry)]
     [:script {:src "https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
