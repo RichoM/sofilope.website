@@ -10,7 +10,7 @@
 (defn lightbox-modal [id img]
   [:div.modal.fade
    {:id id :tabindex "-1" :aria-hidden "true"}
-   [:div.modal-dialog.modal-dialog-centered.modal-xl
+   [:div.modal-dialog.modal-dialog-centered.modal-lg
     [:div.modal-content.bg-transparent.border-0
      [:div.modal-body.p-0.text-center.position-relative
       [:button.btn-close.btn-close-white.position-absolute.top-0.end-0.m-3
