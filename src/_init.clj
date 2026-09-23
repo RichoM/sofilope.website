@@ -131,8 +131,10 @@
      rendered]
 
     :ssgr.doc/document
-    (let [file-name (md->html (-> element meta :file))]
-      (apply-layout rendered file-name))
+    (let [file-name (md->html (-> element meta :file))
+          doc (apply-layout rendered file-name)]
+      (reset! lightbox-registry [])
+      doc)
     rendered))
 
 (register-callback! render)
