@@ -1,3 +1,0 @@
-# Ref sheets
-
-ACAACA

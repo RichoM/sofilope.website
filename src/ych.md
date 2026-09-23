@@ -1,3 +1,0 @@
-# Your character here!
-
-ACAACA

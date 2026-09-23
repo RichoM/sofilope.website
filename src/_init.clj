@@ -8,13 +8,13 @@
 
 (def menu
   {"Home" "index.html"
-   "Prices" {"Ref sheets" "refsheets.html"
-             "Your character here" "ych.html"
-             "Other commissions" "other.html"}
+   "Prices" {"Ref sheets" "prices.html#ref_sheets"
+             "Your character here" "prices.html#your_character_here"
+             "Other commissions" "prices.html#other_commissions"}
    "Terms of service" "tos.html"
    "Contact" "contact.html"})
 
-(def socials 
+(def socials
   [:ul.nav.col-md-4.justify-content-end.list-unstyled.d-flex
    [:li.ms-1
     [:a.text-body-secondary {:target "_blank" :href "https://www.furaffinity.net/user/sofiamer/"}
@@ -33,9 +33,7 @@
      [:i.fa-brands.fa-deviantart.fa-2x.fa-fw]]]
    [:li.ms-1
     [:a.text-body-secondary {:target "_blank" :href "https://t.me/sofiamercuri0"}
-     [:i.fa-brands.fa-telegram.fa-2x.fa-fw]]]
-
-   ])
+     [:i.fa-brands.fa-telegram.fa-2x.fa-fw]]]])
 
 (defn navbar-button [file-name [name value]]
   (if (string? value)
@@ -63,13 +61,13 @@
                    value))])))
 
 (defn navbar [file-name]
-  [:nav.navbar.navbar-expand-lg.sticky-top.justify-content-center.bg-body-tertiary
+  [:nav.navbar.navbar-expand-lg.sticky-top.justify-content-center.bg-body-tertiary.border-bottom
    [:div.container
     [:a.navbar-brand {:href "index.html"}
      ; TODO(Richo): Acá podríamos agregar el iconito de sofilope
      "Sofilope"
      socials]
-    
+
     [:button.navbar-toggler {:type "button"
                              :data-bs-toggle "collapse"
                              :data-bs-target "#navbarNavDropdown"
@@ -83,9 +81,9 @@
            menu)]]]])
 
 (def footer
-  [:div.container-fluid.bg-body-tertiary
+  [:div.container-fluid.bg-body-tertiary.border-top
    [:div.container
-    [:footer.d-flex.flex-wrap.justify-content-between.align-items-center.pt-3.pb-5.border-top
+    [:footer.d-flex.flex-wrap.justify-content-between.align-items-center.pt-3.pb-5
      [:div.col-md-4.mb-3.mb-md-0.text-body-secondary
       "©2026 Sofilope"]
      socials]]])
@@ -107,7 +105,7 @@
     (navbar file-name)
     (case file-name
       "index.html" document
-      [:div.container.fs-5 document])
+      [:div.container document])
     footer
     [:div (get-lightbox-modals document)]
     [:script {:src "https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
@@ -126,6 +124,22 @@
 (defn replace-tag [html tag]
   (assoc html 0 tag))
 
+(defn set-id [html id]
+  (let [attrs (second html)]
+    (if (and attrs (map? attrs))
+      (assoc-in html [1 :id] id)
+      (into (conj (subvec html 0 1) {:id id})
+            (subvec html 1)))))
+
+(defn sanitize-id [text]
+  (let [id (-> (str/lower-case text)
+               (str/replace #"\W+" " ")
+               (str/trim)
+               (str/replace #"\s" "_"))]
+    (if (re-find #"^[a-z]" id)
+      id
+      (str "a_" id))))
+
 (defn render
   [{:keys [type] :as element} rendered]
   (case type
@@ -137,7 +151,10 @@
       (replace-tag rendered tag))
 
     :ssgr.doc/heading
-    (add-class rendered "pt-2" "my-4")
+    (let [token (-> element meta :token)]
+      (-> rendered
+          (add-class "pt-2" "my-4")
+          (set-id (sanitize-id (t/input-value token)))))
 
     :ssgr.doc/blockquote
     [:div.alert.alert-dark.mt-4.py-4.mb-5 {:role "alert"}
@@ -149,3 +166,20 @@
     rendered))
 
 (register-callback! render)
+
+(comment
+
+  (defn sanitize-for-id [text]
+    (let [text (-> (str/lower-case text)
+                   (str/replace #"\W+" " ")
+                   (str/trim)
+                   (str/replace #"\s" "_"))]
+      (if (re-find #"^[a-z]" text)
+        text
+        (str "a_" text))))
+
+  (str/trim)
+  (sanitize-for-id "Your character here")
+  (sanitize-for-id "123  you up!!! ")
+
+  (sanitize-for-id "# 123  you up!!! "))

@@ -13,7 +13,7 @@
 
 [:div.container
  (apply carousel
-        (->> (range 50)
+        (->> (range 10)
              (map (fn [idx]
                     (carousel-slide
                      :img (str "https://placehold.co/900x450/" (nth-color idx) "/3c3430")
@@ -21,7 +21,7 @@
 
 [:div.px-1.w-100.bg-light
  [:div.gallery
-  (->> (range 50)
+  (->> (range 20)
        (map (fn [idx]
               [:div.gallery-item
                (let [w (+ 200 (rand-int 500))
