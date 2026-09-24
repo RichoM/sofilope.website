@@ -12,7 +12,8 @@
              "Your character here" "prices.html#your_character_here"
              "Other commissions" "prices.html#other_commissions"}
    "Terms of service" "tos.html"
-   "Contact" "contact.html"})
+   "Contact" "contact.html"
+   "About me" "about.html"})
 
 (def socials
   [:ul.nav.col-md-4.justify-content-end.list-unstyled.d-flex
