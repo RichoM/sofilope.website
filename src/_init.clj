@@ -16,25 +16,24 @@
    "About me" "about.html"})
 
 (def socials
-  [:ul.nav.col-md-4.justify-content-end.list-unstyled.d-flex
-   [:li.ms-1
-    [:a.text-body-secondary {:target "_blank" :href "https://www.furaffinity.net/user/sofiamer/"}
-     [:i.fa-solid.fa-otter.fa-2x.fa-fw]]]
-   [:li.ms-1
-    [:a.text-body-secondary {:target "_blank" :href "https://x.com/Sofimercuri"}
-     [:i.fa-brands.fa-twitter.fa-2x.fa-fw]]]
-   [:li.ms-1
-    [:a.text-body-secondary {:target "_blank" :href "https://bsky.app/profile/sofimercuri.bsky.social"}
-     [:i.fa-brands.fa-bluesky.fa-2x.fa-fw]]]
-   [:li.ms-1
-    [:a.text-body-secondary {:target "_blank" :href "https://www.reddit.com/user/sofilope/"}
-     [:i.fa-brands.fa-reddit.fa-2x.fa-fw]]]
-   [:li.ms-1
-    [:a.text-body-secondary {:target "_blank" :href "https://www.deviantart.com/sofmer"}
-     [:i.fa-brands.fa-deviantart.fa-2x.fa-fw]]]
-   [:li.ms-1
-    [:a.text-body-secondary {:target "_blank" :href "https://t.me/sofiamercuri0"}
-     [:i.fa-brands.fa-telegram.fa-2x.fa-fw]]]])
+  [:ul.nav.col-md-auto.justify-content-end.list-unstyled.d-flex
+   (->> [{:url "https://www.furaffinity.net/user/sofiamer/"
+          :icon [:i.fa-solid.fa-otter.fa-2x.fa-fw]}
+         {:url "https://x.com/Sofimercuri"
+          :icon [:i.fa-brands.fa-twitter.fa-2x.fa-fw]}
+         {:url "https://bsky.app/profile/sofimercuri.bsky.social"
+          :icon [:i.fa-brands.fa-bluesky.fa-2x.fa-fw]}
+         {:url "https://www.reddit.com/user/sofilope/"
+          :icon [:i.fa-brands.fa-reddit.fa-2x.fa-fw]}
+         {:url "https://www.deviantart.com/sofmer"
+          :icon [:i.fa-brands.fa-deviantart.fa-2x.fa-fw]}
+         {:url "https://t.me/sofiamercuri0"
+          :icon [:i.fa-brands.fa-telegram.fa-2x.fa-fw]}]
+        (map (fn [{:keys [icon url]}]
+               [:li ;.mx-1
+                [:a.text-body-secondary {:target "_blank" :href url}
+                 icon]]))
+        (doall))])
 
 (defn navbar-button [file-name [name value]]
   (if (string? value)
@@ -66,9 +65,8 @@
    [:div.container
     [:a.navbar-brand {:href "index.html"}
      ; TODO(Richo): Acá podríamos agregar el iconito de sofilope
-     "Sofilope"
-     socials]
-
+     "Sofilope"]
+    socials
     [:button.navbar-toggler {:type "button"
                              :data-bs-toggle "collapse"
                              :data-bs-target "#navbarNavDropdown"
