@@ -32,3 +32,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+window.addEventListener("load", function () {
+    delay(1000).then(function () {
+        document.addEventListener('activate.bs.scrollspy', function (event) {
+            const hash = event.relatedTarget.getAttribute('href');
+            if (hash) {
+                history.pushState(null, null, hash);
+            }
+        });
+    })
+})
