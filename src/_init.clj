@@ -16,7 +16,7 @@
    "About me" "about.html"})
 
 (def socials
-  [:ul.nav.col-md-auto.justify-content-end.list-unstyled.d-flex
+  [:ul.nav.col-md-auto.list-unstyled.d-flex
    (->> [{:url "https://www.furaffinity.net/user/sofiamer/"
           :icon [:i.fa-solid.fa-otter.fa-2x.fa-fw]}
          {:url "https://x.com/Sofimercuri"
@@ -66,15 +66,18 @@
     [:a.navbar-brand {:href "index.html"}
      ; TODO(Richo): Acá podríamos agregar el iconito de sofilope
      "Sofilope"]
-    socials
-    [:button.navbar-toggler {:type "button"
-                             :data-bs-toggle "collapse"
-                             :data-bs-target "#navbarNavDropdown"
-                             :aria-controls "navbarNavDropdown"
-                             :aria-expanded "false"
-                             :aria-label "Toggle navigation"}
-     [:span.navbar-toggler-icon]]
+    [:button.navbar-toggler
+     {:type "button"
+      :data-bs-toggle "collapse"
+      :data-bs-target "#navbarNavDropdown"
+      :aria-controls "navbarNavDropdown"
+      :aria-expanded "false"
+      :aria-label "Toggle navigation"}
+     [:span.navbar-toggler-icon ]]
     [:div#navbarNavDropdown.collapse.navbar-collapse.justify-content-end
+     [:div.col.p-2]
+     [:div.col-auto socials]
+     [:div.col.p-2]
      [:ul.navbar-nav
       (map (partial navbar-button file-name)
            menu)]]]])
