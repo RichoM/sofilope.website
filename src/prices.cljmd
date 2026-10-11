@@ -26,10 +26,13 @@
         [:img
          {:src (str "https://placehold.co/400x500/" color "/3c3430") :alt "..."
           :style "height: 100%; width: 100%; object-fit: cover;"}]
-        :img (str "https://placehold.co/1400x1500/" color "/3c3430")))]
+        :img (str "https://placehold.co/1400x1500/" color "/3c3430")))
+     [:div.position-absolute.top-0.start-0.m-4 ;.text-center.w-100.p-3
+      [:h1 title]
+      ]]
     [:div.col-md-7
      [:div.card-body
-      [:h2.card-title title]
+      ;[:h2.card-title title]
       [:div.card-text
        (ssgr/markdown text)]
       [:p.card-text
