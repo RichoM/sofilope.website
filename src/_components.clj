@@ -49,8 +49,10 @@
          (map :modal))))
 
 
-(defn gallery [items]
-  [:div.gallery items])
+(defn gallery
+  ([items] (gallery {} items))
+  ([attrs items]
+   [:div.gallery attrs items]))
 
 (defn gallery-item [children]
   [:div.gallery-item children])
