@@ -1,16 +1,29 @@
 (require '[ssgr :refer [register-callback!]])
 (require '[ssgr.token :as t])
 (require '[clojure.string :as str])
+(require 'fs)
 
 (declare get-lightbox-modals) ; HACK(Richo): We should support namespaces
 
 (def title "Sofilope")
 
+(defn id->title [id]
+  (-> id
+      (str/trim)
+      (str/replace #"_" " ")
+      (str/capitalize)))
+
 (def menu
   {"Home" "index.html"
-   "Prices" {"Ref sheets" "prices.html#ref_sheets"
-             "Your character here" "prices.html#your_character_here"
-             "Other commissions" "prices.html#other_commissions"}
+   "Prices" (->> (fs/list-dir "src/prices")
+                 (remove fs/directory?)
+                 (sort)
+                 (map (fn [file]
+                        (let [[_ name _] (str/split (fs/file-name file) #"\.")
+                              id (str/trim name)
+                              title (id->title id)]
+                          [title (str "prices.html#" id)])))
+                 (into {}))
    "Terms of service" "tos.html"
    "Contact" "contact.html"
    "About me" "about.html"})

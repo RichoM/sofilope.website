@@ -56,13 +56,6 @@
                                  :img fullscreen)))))
              (doall)))]]]]])
 
-
-(defn id->title [id]
-  (-> id
-      (str/trim)
-      (str/replace #"_" " ")
-      (str/capitalize)))
-
 [:div
  {:data-bs-spy "scroll"
   :data-bs-target "#navbarNavDropdown"
