@@ -1,0 +1,63 @@
+/* Scrollbar container optimization */
+.thumbnail-scroll-container {
+  scrollbar-width: thin; /* Clean look on Firefox */
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch; /* Smooth swiping on iOS */
+}
+
+/* Hide scrollbars completely on Chrome/Safari/Edge if preferred */
+.thumbnail-scroll-container::-webkit-scrollbar {
+  height: 6px;
+}
+.thumbnail-scroll-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+/* Thumbnail Button Overrides */
+.thumbnail-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  opacity: 0.5;
+  transition: all 0.2s ease-in-out;
+  flex: 0 0 auto; /* Prevents thumbnails from shrinking */
+}
+
+.thumbnail-btn img {
+  width: 100px;
+  height: 65px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+/* Active and Hover states */
+.thumbnail-btn.active {
+  opacity: 1;
+}
+.thumbnail-btn.active img {
+  border-color: #0d6efd; /* Bootstrap primary color border */
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+.thumbnail-btn:hover {
+  opacity: 0.8;
+}
+
+.gallery {
+  /* Automatically switches between 1 to 4 columns depending on screen size */
+  column-width: 25vw; 
+  column-gap: 5px;
+  padding: 5px;
+}
+
+.gallery-item {
+  /* Forces the item to stay contained inside its column */
+  break-inside: avoid; 
+  margin-bottom: 5px
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto; /* Lets the height adapt naturally to the aspect ratio */
+  display: block;
+}
